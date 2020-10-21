@@ -46,8 +46,20 @@ class LinkedList:
         self.next = insertee
 
     def at(self, n):
-       
-        if(n == 0):   
-            print("Node value in the class: " , self)
+        if(n == 0):
             return self
-        self.next.at(n - 1)
+        return self.next.at(n - 1)
+
+    def search(self, val):
+        if(self.value == val):
+            return self
+        if self.next.is_sentinel():
+            return None
+        return self.next.search(val)
+
+    def insert_in_order(self, node):
+
+        if self.next.is_sentinel() or node.value < self.next.value:
+            return self.insert(node)
+        
+        return self.next.insert_in_order(node)
