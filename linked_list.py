@@ -9,4 +9,45 @@
 
 class LinkedList:
 
-    pass
+    def __init__(self, value=None):
+        
+        self.value = value
+        self.next = self
+        self.prev = self
+
+    def is_sentinel(self):
+        return self.value is None
+
+    def is_empty(self):
+        return self.next is self and self.prev is self
+
+    def is_last(self):
+        return self.next.value is None
+
+    def last(self):
+        return self.prev
+
+    def append(self, appendee):
+        self.last().next = appendee #Sets the last elements next value to the appendee (was the sentinel)
+        appendee.prev = self.last() #Sets the appendee's previous value to the recent last value 
+        self.prev = appendee #Sets the sentinels previous to the new appendee
+        appendee.next = self #Sets the appendees next value to the sentinel
+
+    def delete(self):
+        self.prev.next = self.next
+        self.next.prev = self.prev
+        self.next = None
+        self.prev = None
+
+    def insert(self, insertee):
+        self.next.prev = insertee
+        insertee.prev = self
+        insertee.next = self.next
+        self.next = insertee
+
+    def at(self, n):
+       
+        if(n == 0):   
+            print("Node value in the class: " , self)
+            return self
+        self.next.at(n - 1)
